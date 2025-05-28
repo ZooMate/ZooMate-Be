@@ -10,10 +10,14 @@ export declare class ChatsService {
     }>;
     getRooms(): Promise<({
         users: {
-            email: string;
-            nickname: string;
-            password: string;
+            userId: string;
+            userName: string;
+            userPassword: string;
+            userDesc: string | null;
             id: number;
+            region: string | null;
+            pets: number[];
+            profile: string | null;
         }[];
     } & {
         id: number;
@@ -25,30 +29,38 @@ export declare class ChatsService {
         content: string;
     }): Promise<{
         user: {
-            email: string;
-            nickname: string;
-            password: string;
+            userId: string;
+            userName: string;
+            userPassword: string;
+            userDesc: string | null;
             id: number;
+            region: string | null;
+            pets: number[];
+            profile: string | null;
         };
     } & {
+        userId: number;
         id: number;
         content: string;
         createdAt: Date;
-        userId: number;
         chatRoomId: number;
     }>;
     getMessagesByRoom(chatRoomId: number): Promise<({
         user: {
-            email: string;
-            nickname: string;
-            password: string;
+            userId: string;
+            userName: string;
+            userPassword: string;
+            userDesc: string | null;
             id: number;
+            region: string | null;
+            pets: number[];
+            profile: string | null;
         };
     } & {
+        userId: number;
         id: number;
         content: string;
         createdAt: Date;
-        userId: number;
         chatRoomId: number;
     })[]>;
     joinRoom(userId: number, roomId: number): Promise<{

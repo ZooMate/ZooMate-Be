@@ -12,45 +12,49 @@ export declare class PostsController {
     getPostById(id: string): Promise<PostEntity>;
     updatePost(req: any, id: string, dto: UpdatePostDto): Promise<PostEntity>;
     deletePost(req: any, id: string): Promise<{
+        userId: number;
         title: string;
         id: number;
         content: string;
         createdAt: Date;
-        userId: number;
     }>;
     createAnswer(req: any, postId: string, dto: CreateAnswerDto): Promise<{
+        userId: number;
         id: number;
         content: string;
         createdAt: Date;
-        userId: number;
         postId: number;
     }>;
     getAnswersByPost(postId: string): Promise<({
         user: {
-            email: string;
-            nickname: string;
-            password: string;
+            userId: string;
+            userName: string;
+            userPassword: string;
+            userDesc: string | null;
             id: number;
+            region: string | null;
+            pets: number[];
+            profile: string | null;
         };
     } & {
+        userId: number;
         id: number;
         content: string;
         createdAt: Date;
-        userId: number;
         postId: number;
     })[]>;
     updateAnswer(req: any, id: string, dto: UpdateAnswerDto): Promise<{
+        userId: number;
         id: number;
         content: string;
         createdAt: Date;
-        userId: number;
         postId: number;
     }>;
     deleteAnswer(req: any, id: string): Promise<{
+        userId: number;
         id: number;
         content: string;
         createdAt: Date;
-        userId: number;
         postId: number;
     }>;
 }

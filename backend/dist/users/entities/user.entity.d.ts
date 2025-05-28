@@ -1,9 +1,11 @@
 export declare class UserEntity {
     id: number;
-    email: string;
-    nickname: string;
-    password: string;
-    createdAt?: Date;
-    updatedAt?: Date;
+    userId: string;
+    userName: string;
+    userPassword: string;
+    region: string;
+    userDesc: string;
+    pets: Array<number>;
+    profile: string;
     constructor(partial: Partial<UserEntity>);
 }

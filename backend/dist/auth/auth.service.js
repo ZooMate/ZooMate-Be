@@ -54,30 +54,30 @@ let AuthService = class AuthService {
         this.usersService = usersService;
         this.jwtService = jwtService;
     }
-    async validateUser(email, password) {
-        const user = await this.usersService.findByEmail(email);
-        if (user && (await bcrypt.compare(password, user.password))) {
-            const { password, ...result } = user;
+    async validateUser(userId, password) {
+        const user = await this.usersService.findByUserId(userId);
+        if (user && (await bcrypt.compare(password, user.userPassword))) {
+            const { userPassword, ...result } = user;
             return result;
         }
         return null;
     }
     async login(loginUserDto) {
-        const user = await this.validateUser(loginUserDto.email, loginUserDto.password);
+        const user = await this.validateUser(loginUserDto.userId, loginUserDto.userPassword);
         if (!user) {
             throw new common_1.NotFoundException('존재하지 않는 유저입니다.');
         }
         const payload = {
-            email: user.email,
+            userId: user.userId,
             sub: user.id,
-            nickname: user.nickname,
+            userName: user.userName,
         };
         return {
             access_token: this.jwtService.sign(payload),
         };
     }
     async signup(data) {
-        const exists = await this.usersService.findByEmail(data.email);
+        const exists = await this.usersService.findByUserId(data.userId);
         if (exists) {
             throw new common_1.UnauthorizedException('이미 가입된 이메일입니다.');
         }

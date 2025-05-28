@@ -16,13 +16,17 @@ datasource db {
 
 model User {
   id       Int       @id @default(autoincrement())
-  email    String    @unique
-  password String
-  nickname String
+  userId   String    @unique
+  userPassword String
+  userName String
+  region   String?
+  userDesc String?
+  pets     Int[] @default([])
+  profile  String?
+
   posts    Post[]
   answers  Answer[]
-  messages Message[]
-
+  message  Message[]
   ChatRoom ChatRoom[]
 }
 
