@@ -9,20 +9,20 @@ export class UsersService {
 
   async create(createUserDto: CreateUserDto) {
     const hashedPassword: string = await (bcrypt as any).hash(
-      createUserDto.password,
+      createUserDto.userPassword,
       10,
     );
     return this.prisma.user.create({
       data: {
-        email: createUserDto.email,
-        nickname: createUserDto.nickname,
-        password: hashedPassword,
+        userId: createUserDto.userId,
+        userName: createUserDto.userName,
+        userPassword: hashedPassword,
       },
     });
   }
 
-  async findByEmail(email: string) {
-    return this.prisma.user.findUnique({ where: { email } });
+  async findByUserId(userId: string) {
+    return this.prisma.user.findUnique({ where: { userId } });
   }
 
   async findById(id: number) {

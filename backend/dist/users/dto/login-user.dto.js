@@ -13,18 +13,18 @@ exports.LoginUserDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class LoginUserDto {
-    email;
-    password;
+    userId;
+    userPassword;
 }
 exports.LoginUserDto = LoginUserDto;
 __decorate([
-    (0, class_validator_1.IsEmail)(),
-    (0, swagger_1.ApiProperty)({ description: '이메일', example: 'test@example.com' }),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, swagger_1.ApiProperty)({ description: '사용자 ID', example: 'ZooMate' }),
     __metadata("design:type", String)
-], LoginUserDto.prototype, "email", void 0);
+], LoginUserDto.prototype, "userId", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     (0, swagger_1.ApiProperty)({ description: '비밀번호', example: 'password' }),
     __metadata("design:type", String)
-], LoginUserDto.prototype, "password", void 0);
+], LoginUserDto.prototype, "userPassword", void 0);
 //# sourceMappingURL=login-user.dto.js.map

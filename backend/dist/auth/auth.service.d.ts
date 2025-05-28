@@ -6,18 +6,26 @@ export declare class AuthService {
     private usersService;
     private jwtService;
     constructor(usersService: UsersService, jwtService: JwtService);
-    validateUser(email: string, password: string): Promise<{
-        email: string;
-        nickname: string;
+    validateUser(userId: string, password: string): Promise<{
+        userId: string;
+        userName: string;
+        userDesc: string | null;
         id: number;
+        region: string | null;
+        pets: number[];
+        profile: string | null;
     } | null>;
     login(loginUserDto: LoginUserDto): Promise<{
         access_token: string;
     }>;
     signup(data: CreateUserDto): Promise<{
-        email: string;
-        nickname: string;
-        password: string;
+        userId: string;
+        userName: string;
+        userPassword: string;
+        userDesc: string | null;
         id: number;
+        region: string | null;
+        pets: number[];
+        profile: string | null;
     }>;
 }
