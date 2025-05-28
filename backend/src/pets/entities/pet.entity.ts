@@ -21,8 +21,8 @@ export class PetEntity {
   gender: Gender;
   isNetering: boolean;
   isPublic: boolean;
-  bread?: string;
-  weight?: number;
+  bread?: string | null;
+  weight?: number | null;
   tag: string[];
   photos: string[];
   category: Category;
@@ -34,13 +34,26 @@ export class PetEntity {
   attachments?: AttachmentEntity[];
 
   constructor(partial: Partial<PetEntity>) {
+    if (partial.gender !== undefined) {
+      this.gender =
+        typeof partial.gender === 'string'
+          ? Gender[partial.gender as keyof typeof Gender]
+          : partial.gender;
+    }
+
+    if (partial.category !== undefined) {
+      this.category =
+        typeof partial.category === 'string'
+          ? Category[partial.category as keyof typeof Category]
+          : partial.category;
+    }
+
     Object.assign(this, partial);
+
     if (partial.owner) {
       this.owner = new UserEntity(partial.owner);
     }
-    // if (partial.answers) {
-    //   this.answers = partial.answers.map((answer) => new AnswerEntity(answer));
-    // }
+
     if (partial.attachments) {
       this.attachments = partial.attachments.map(
         (attachment) => new AttachmentEntity(attachment),
