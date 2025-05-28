@@ -16,10 +16,10 @@ export class UserEntity {
   userId: string;
   userName: string;
   userPassword: string;
-  region: string;
-  userDesc: string;
-  pets: Array<number>;
-  profile: string;
+  region?: string | null;
+  userDesc?: string | null;
+  pets?: Array<number> | null;
+  profile?: string | null;
 
   constructor(partial: Partial<UserEntity>) {
     Object.assign(this, partial);
