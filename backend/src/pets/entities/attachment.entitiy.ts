@@ -1,6 +1,6 @@
 export class AttachmentEntity {
   id: number;
-  postId: number;
+  petId: number;
   fileName: string;
   fileUrl: string;
   fileSize: number;
