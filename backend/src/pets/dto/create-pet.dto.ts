@@ -12,14 +12,6 @@ import {
 } from 'class-validator';
 
 export class CreatePetDto {
-  // @IsNotEmpty()
-  // @ApiProperty({ description: '게시글 제목', example: '게시글 제목' })
-  // title: string;
-
-  // @IsNotEmpty()
-  // @ApiProperty({ description: '게시글 내용', example: '게시글 내용' })
-  // content: string;
-
   @IsString()
   @IsNotEmpty()
   @ApiProperty({ description: '반려동물 이름', example: '최마루' })
@@ -50,7 +42,7 @@ export class CreatePetDto {
 
   @IsOptional()
   @ApiProperty({
-    description: '품종 (선택사항)',
+    description: '품종 (선택)',
     example: '초코푸들',
     required: false,
   })
@@ -59,7 +51,7 @@ export class CreatePetDto {
   @IsNumber()
   @IsOptional()
   @ApiProperty({
-    description: '몸무게 (선택사항)',
+    description: '몸무게 (선택)',
     example: '5',
     required: false,
   })

@@ -64,7 +64,7 @@ export class PetsController {
     return pets.map((pet) => new PetEntity(pet || {}));
   }
 
-  // 반려동물 상세
+  // 반려동물 상세 정보
   @Get('pets/:id')
   @ApiOperation({ summary: '반려동물 상세' })
   async getPetById(@Param('id') id: string) {

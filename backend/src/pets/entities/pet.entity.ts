@@ -1,5 +1,4 @@
 import { UserEntity } from 'src/users/entities/user.entity';
-// import { AnswerEntity } from './answer.entitiy';
 import { AttachmentEntity } from './attachment.entitiy';
 
 export enum Gender {
@@ -30,7 +29,6 @@ export class PetEntity {
   ownerId: number;
   owner: UserEntity;
 
-  // answers?: AnswerEntity[];
   attachments?: AttachmentEntity[];
 
   constructor(partial: Partial<PetEntity>) {
