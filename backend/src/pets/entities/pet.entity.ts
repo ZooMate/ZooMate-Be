@@ -27,7 +27,7 @@ export class PetEntity {
   category: Category | string;
 
   ownerId: number;
-  owner: UserEntity;
+  owner?: UserEntity;
 
   attachments?: AttachmentEntity[];
 
