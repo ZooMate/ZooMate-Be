@@ -20,7 +20,7 @@ export class PetEntity {
   gender: Gender | string;
   isNetering: boolean;
   isPublic: boolean;
-  bread?: string | null;
+  breed?: string | null;
   weight?: number | null;
   tag: string[];
   photos: string[];

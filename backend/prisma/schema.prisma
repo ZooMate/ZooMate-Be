@@ -36,7 +36,7 @@ model Pet {
   gender      Gender   @default(female)
   isNetering  Boolean
   isPublic    Boolean
-  bread       String?
+  breed       String?
   weight      Float?
   tag         String[] @default([])
   photos      String[]

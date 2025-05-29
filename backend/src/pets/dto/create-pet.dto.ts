@@ -46,7 +46,7 @@ export class CreatePetDto {
     example: '초코푸들',
     required: false,
   })
-  bread?: string;
+  breed?: string;
 
   @IsNumber()
   @IsOptional()
