@@ -18,16 +18,16 @@ export class PetEntity {
   id: number;
   petName: string;
   age: number | undefined;
-  gender: Gender | string | undefined;
+  gender: Gender | string;
   isNetering: boolean;
   isPublic: boolean;
   bread?: string | null;
   weight?: number | null;
   tag: string[];
   photos: string[];
-  category: Category;
+  category: Category | string;
 
-  ownerId?: number;
+  ownerId: number;
   owner: UserEntity;
 
   // answers?: AnswerEntity[];
@@ -39,14 +39,16 @@ export class PetEntity {
     if (partial.gender !== undefined) {
       this.gender =
         typeof partial.gender === 'string'
-          ? Gender[partial.gender as keyof typeof Gender]
+          ? Gender[(partial.gender as keyof typeof Gender) || partial.gender]
           : partial.gender;
     }
 
     if (partial.category !== undefined) {
       this.category =
         typeof partial.category === 'string'
-          ? Category[partial.category as keyof typeof Category]
+          ? Category[
+              (partial.category as keyof typeof Category) || partial.category
+            ]
           : partial.category;
     }
 

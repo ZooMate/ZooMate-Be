@@ -13,8 +13,6 @@ import {
 } from '@nestjs/common';
 import { PetsService } from './pets.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-// import { UpdateAnswerDto } from './dto/update-answer.dto';
-// import { CreateAnswerDto } from './dto/create-answer.dto';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AzureStorageInterceptor } from 'src/azure-storage/azure-storage.interceptor';
 import { FilesInterceptor } from '@nestjs/platform-express';
@@ -51,32 +49,33 @@ export class PetsController {
     }),
     AzureStorageInterceptor,
   )
-  @ApiOperation({ summary: '게시글 생성' })
+  @ApiOperation({ summary: '반려동물 등록' })
   async createPet(@Request() req, @Body() dto: CreatePetDto) {
     const pet = await this.petsService.createPet(req.user.id, dto, req.files);
+    if (!pet) throw new BadRequestException('Pet Creation Failed');
     return new PetEntity(pet);
   }
 
-  // 전체 게시글 조회
+  // 반려동물 전체 목록
   @Get('pets')
-  @ApiOperation({ summary: '전체 게시글 조회' })
+  @ApiOperation({ summary: '반려동물 전체 목록' })
   async getPets() {
     const pets = await this.petsService.getPets();
     return pets.map((pet) => new PetEntity(pet || {}));
   }
 
-  // 단일 게시글 조회
+  // 반려동물 상세
   @Get('pets/:id')
-  @ApiOperation({ summary: '단일 게시글 조회' })
+  @ApiOperation({ summary: '반려동물 상세' })
   async getPetById(@Param('id') id: string) {
     const pet = await this.petsService.getPetById(Number(id));
     return new PetEntity(pet || {});
   }
 
-  // 게시글 수정
+  // 반려동물 정보 수정
   @UseGuards(JwtAuthGuard)
   @Patch('pets/:id')
-  @ApiOperation({ summary: '게시글 수정' })
+  @ApiOperation({ summary: '반려동물 정보 수정' })
   async updatePet(
     @Request() req,
     @Param('id') id: string,
@@ -86,10 +85,10 @@ export class PetsController {
     return new PetEntity(pet || {});
   }
 
-  // 게시글 삭제
+  // 반려동물 정보 삭제
   @UseGuards(JwtAuthGuard)
   @Delete('pets/:id')
-  @ApiOperation({ summary: '게시글 삭제' })
+  @ApiOperation({ summary: '반려동물 정보 삭제' })
   async deletePet(@Request() req, @Param('id') id: string) {
     return this.petsService.deletePet(Number(id), req.user.id);
   }
