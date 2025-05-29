@@ -25,6 +25,7 @@ model User {
 
   pets     Pet[]
   mates    Mate[]
+  answers  Answer[]
   message  Message[]
   ChatRoom ChatRoom[]
 }
@@ -46,6 +47,7 @@ model Pet {
   owner   User @relation(fields: [ownerId], references: [id])
   
   mates    Mate[]
+  answers  Answer[]
   attachments Attachment[]
 }
 
@@ -69,6 +71,16 @@ model Mate {
   pet     Pet  @relation(fields: [petId], references: [id])
   
   @@id([userId, petId]) // 복합 PK 설정
+}
+
+model Answer {
+  id        Int      @id @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+
+  Pet Pet[]
 }
 
 model ChatRoom {
