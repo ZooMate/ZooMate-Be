@@ -17,8 +17,8 @@ export enum Category {
 export class PetEntity {
   id: number;
   petName: string;
-  age: number;
-  gender: Gender;
+  age: number | undefined;
+  gender: Gender | string | undefined;
   isNetering: boolean;
   isPublic: boolean;
   bread?: string | null;
@@ -34,6 +34,8 @@ export class PetEntity {
   attachments?: AttachmentEntity[];
 
   constructor(partial: Partial<PetEntity>) {
+    Object.assign(this, partial);
+
     if (partial.gender !== undefined) {
       this.gender =
         typeof partial.gender === 'string'
@@ -47,8 +49,6 @@ export class PetEntity {
           ? Category[partial.category as keyof typeof Category]
           : partial.category;
     }
-
-    Object.assign(this, partial);
 
     if (partial.owner) {
       this.owner = new UserEntity(partial.owner);

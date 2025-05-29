@@ -54,7 +54,7 @@ export class PetsController {
   @ApiOperation({ summary: '게시글 생성' })
   async createPet(@Request() req, @Body() dto: CreatePetDto) {
     const pet = await this.petsService.createPet(req.user.id, dto, req.files);
-    return new PetEntity(pet || {});
+    return new PetEntity(pet);
   }
 
   // 전체 게시글 조회
@@ -62,7 +62,7 @@ export class PetsController {
   @ApiOperation({ summary: '전체 게시글 조회' })
   async getPets() {
     const pets = await this.petsService.getPets();
-    return pets.map((pet) => new PetEntity(pet));
+    return pets.map((pet) => new PetEntity(pet || {}));
   }
 
   // 단일 게시글 조회

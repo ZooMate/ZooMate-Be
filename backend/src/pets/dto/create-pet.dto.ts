@@ -1,13 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Category } from '@prisma/client';
-import { Gender } from '../entities/pet.entity';
+import { Category, Gender } from '../entities/pet.entity';
 import {
   IsArray,
   IsBoolean,
   IsNotEmpty,
   IsNumber,
+  IsInt,
   IsOptional,
   IsEnum,
+  IsString,
 } from 'class-validator';
 
 export class CreatePetDto {
@@ -19,21 +20,21 @@ export class CreatePetDto {
   // @ApiProperty({ description: '게시글 내용', example: '게시글 내용' })
   // content: string;
 
+  @IsString()
   @IsNotEmpty()
   @ApiProperty({ description: '반려동물 이름', example: '최마루' })
   petName: string;
 
-  @IsNumber()
+  @IsInt()
   @IsNotEmpty()
   @ApiProperty({ description: '반려동물 나이', example: '2살' })
   age: number;
 
   @IsEnum(Gender)
-  @IsNotEmpty()
   @ApiProperty({
-    description: '반려동물 성별',
     example: Gender.female,
     enum: Gender,
+    description: '성별',
   })
   gender: Gender;
 
@@ -53,15 +54,16 @@ export class CreatePetDto {
     example: '초코푸들',
     required: false,
   })
-  bread: string;
+  bread?: string;
 
+  @IsNumber()
   @IsOptional()
   @ApiProperty({
     description: '몸무게 (선택사항)',
     example: '5',
     required: false,
   })
-  weight: number;
+  weight?: number;
 
   @IsArray()
   @ApiProperty({
@@ -82,6 +84,7 @@ export class CreatePetDto {
   })
   category: Category;
 
+  @IsNumber()
   @IsNotEmpty()
   @ApiProperty({ description: '소유자 ID', example: '1' })
   ownerId: number;
