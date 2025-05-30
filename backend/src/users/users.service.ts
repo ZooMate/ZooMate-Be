@@ -19,6 +19,7 @@ export class UsersService {
         userPassword: hashedPassword,
         region: createUserDto.region,
         userDesc: createUserDto.userDesc,
+        profile: createUserDto.profile,
       },
     });
   }

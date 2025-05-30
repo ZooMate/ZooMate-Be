@@ -24,4 +24,11 @@ export class CreateUserDto {
     example: '귀여운 초코푸들 마루가 있어요',
   })
   userDesc?: string;
+
+  @IsOptional()
+  @ApiProperty({
+    description: '프로필 이미지 URL',
+    example: 'default',
+  })
+  profile?: string;
 }

@@ -46,7 +46,7 @@ export class AuthService {
   async signup(data: CreateUserDto) {
     const exists = await this.usersService.findByUserId(data.userId);
     if (exists) {
-      throw new UnauthorizedException('이미 가입된 이메일입니다.');
+      throw new UnauthorizedException('이미 둥록된 유저입니다.');
     }
     const user = await this.usersService.create(data);
     return user;
