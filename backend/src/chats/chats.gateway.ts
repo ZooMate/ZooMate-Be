@@ -14,17 +14,25 @@ import { ChatsService } from './chats.service';
 import { SendMessageDto } from './dto/send-message.dto';
 import { Server, Socket } from 'socket.io';
 
+/*
+soket.io
+
+1. webSocket : raw level, client <----> server 한 번 연결되면 안 끊어짐
+2. soket.io : client <----> server 물리적인 연결에 끊김이 있어도 http long polling으로 전환
+
+*/
+
 @Injectable()
-@WebSocketGateway({ cors: true })
+@WebSocketGateway({ cors: true }) // 소켓 IO 사용
 export class ChatsGateway
   implements OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit
 {
   @WebSocketServer()
-  server: Server;
+  server: Server; // soket.io 서버
 
   constructor(
     private jwtService: JwtService,
-    @Inject(forwardRef(() => ChatsService))
+    @Inject(forwardRef(() => ChatsService)) // 순환 참조
     private chatsService: ChatsService,
   ) {}
 
@@ -34,11 +42,12 @@ export class ChatsGateway
 
   // 메시지 브로드캐스팅을 위한 메서드
   broadcastMessage(roomId: number, message: any) {
-    console.log("boardcastMessage ", message);
+    console.log('boardcastMessage ', message);
     this.server.to(`room_${roomId}`).emit('message', message);
   }
 
   async handleConnection(client: Socket) {
+    // 서버 호출시 가장 먼저 호출
     // JWT 인증: access_token 쿼리로 전달
     // console.log(client.handshake.headers.authorization);
     const bearerToken = client.handshake.headers.authorization;
@@ -50,7 +59,7 @@ export class ChatsGateway
     }
     try {
       const payload = this.jwtService.verify(token);
-      (client as any).user = payload;
+      (client as any).user = payload; //
 
       const rooms = await this.chatsService.getRooms();
       console.log(payload);
@@ -79,8 +88,8 @@ export class ChatsGateway
   ) {
     const parsedData = typeof data === 'string' ? JSON.parse(data) : data;
     const chatRoomId = parsedData.chatRoomId;
-    
-    console.log("joinRoom", parsedData, chatRoomId, (client as any).user);
+
+    console.log('joinRoom', parsedData, chatRoomId, (client as any).user);
 
     client.join(`room_${chatRoomId}`);
     await this.chatsService.joinRoom((client as any).user.sub, chatRoomId);
