@@ -17,13 +17,13 @@ datasource db {
 model User {
   id       Int       @id @default(autoincrement())
   userId   String    @unique
-  userPassword String
   userName String
-  region   String?
+  userPassword String
+  region   String
   userDesc String?
+  pets     Pet[]
   profile  String?
 
-  pets     Pet[]
   mates    Mate[]
   answers  Answer[]
   message  Message[]
