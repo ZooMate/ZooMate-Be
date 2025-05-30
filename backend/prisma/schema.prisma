@@ -17,38 +17,70 @@ datasource db {
 model User {
   id       Int       @id @default(autoincrement())
   userId   String    @unique
-  userPassword String
   userName String
-  region   String?
+  userPassword String
+  region   String
   userDesc String?
-  pets     Int[] @default([])
+  pets     Pet[]
   profile  String?
 
-  posts    Post[]
+  mates    Mate[]
   answers  Answer[]
   message  Message[]
   ChatRoom ChatRoom[]
 }
 
-model Post {
-  id          Int          @id @default(autoincrement())
-  title       String
-  content     String
-  createdAt   DateTime     @default(now())
-  user        User         @relation(fields: [userId], references: [id])
-  userId      Int
-  answers     Answer[]
+model Pet {
+  id          Int      @id @default(autoincrement())
+  petName     String
+  age         Int
+  gender      Gender   @default(female)
+  isNetering  Boolean
+  isPublic    Boolean
+  breed       String?
+  weight      Float?
+  tag         String[] @default([])
+  photos      String[]
+  category    Category @default(cat)
+
+  ownerId Int
+  owner   User @relation(fields: [ownerId], references: [id])
+  
+  mates    Mate[]
+  answers  Answer[]
   attachments Attachment[]
+}
+
+enum Gender {
+  male
+  female
+}
+
+enum Category {
+  cat
+  dog
+  reptile
+  bird
+}
+
+model Mate {
+  userId  Int
+  user    User @relation(fields: [userId], references: [id])
+  
+  petId   Int
+  pet     Pet  @relation(fields: [petId], references: [id])
+  
+  @@id([userId, petId]) // 복합 PK 설정
 }
 
 model Answer {
   id        Int      @id @default(autoincrement())
   content   String
   createdAt DateTime @default(now())
-  post      Post     @relation(fields: [postId], references: [id])
-  postId    Int
   user      User     @relation(fields: [userId], references: [id])
   userId    Int
+
+  Pet Pet[]
 }
 
 model ChatRoom {
@@ -75,6 +107,6 @@ model Attachment {
   fileSize  Int
   fileType  String
   createdAt DateTime @default(now())
-  post      Post     @relation(fields: [postId], references: [id])
-  postId    Int
+  pet      Pet     @relation(fields: [petId], references: [id])
+  petId    Int
 }

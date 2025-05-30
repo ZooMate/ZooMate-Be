@@ -3,13 +3,14 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
-import { PostsModule } from './posts/posts.module';
+import { PetsModule } from './pets/pets.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { ChatsModule } from './chats/chats.module';
 import { AuthModule } from './auth/auth.module';
 import { CrawlingModule } from './crawling/crawling.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { AzureStorageModule } from './azure-storage/azure-storage.module';
+import { MatesModule } from './mates/mates.module';
 
 @Module({
   imports: [
@@ -18,12 +19,13 @@ import { AzureStorageModule } from './azure-storage/azure-storage.module';
     }),
     ScheduleModule.forRoot({}),
     UsersModule,
-    PostsModule,
+    PetsModule,
     PrismaModule,
     ChatsModule,
     AuthModule,
     CrawlingModule,
     AzureStorageModule,
+    MatesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

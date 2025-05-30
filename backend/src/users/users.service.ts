@@ -17,6 +17,9 @@ export class UsersService {
         userId: createUserDto.userId,
         userName: createUserDto.userName,
         userPassword: hashedPassword,
+        region: createUserDto.region,
+        userDesc: createUserDto.userDesc,
+        profile: createUserDto.profile,
       },
     });
   }
