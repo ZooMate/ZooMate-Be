@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
 
@@ -30,5 +31,27 @@ export class UsersService {
 
   async findById(id: number) {
     return this.prisma.user.findUnique({ where: { id } });
+  }
+
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    // 비밀번호 해시 처리
+    if (updateUserDto.userPassword) {
+      updateUserDto.userPassword = await bcrypt.hash(
+        updateUserDto.userPassword,
+        10,
+      );
+    }
+
+    const updated = await this.prisma.user.update({
+      where: { id },
+      data: updateUserDto,
+    });
+
+    const { userPassword, ...safeData } = updated;
+    return safeData;
+  }
+
+  async remove(id: number) {
+    return this.prisma.user.delete({ where: { id } });
   }
 }
